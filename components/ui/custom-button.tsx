@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react';
 
 import { cn } from '@/lib/utils';
-import { Button } from '@coin98-com/wallet-adapter-react-ui';
+import { Button } from '@coin98t/wallet-adapter-react-ui';
 
 interface CustomButtonProps {
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;

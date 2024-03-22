@@ -1,6 +1,6 @@
 'use client';
 
-import { CHAINS_ID, useWallet, WALLETS_NAME, TypeConnectError } from '@coin98-com/wallet-adapter-react';
+import { CHAINS_ID, useWallet, WALLETS_NAME, TypeConnectError } from '@coin98t/wallet-adapter-react';
 import Link from 'next/link';
 
 const chainId = CHAINS_ID.binanceSmartTest;

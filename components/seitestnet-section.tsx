@@ -1,9 +1,9 @@
-import { useWallet } from '@coin98-com/wallet-adapter-react';
+import { useWallet } from '@coin98t/wallet-adapter-react';
 import { useEffect, useState } from 'react';
 
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { calculateFee, MsgSendEncodeObject } from '@cosmjs/stargate';
-import { AdapterCosmos, TransactionCosmos } from '@coin98-com/wallet-adapter-base';
+import { AdapterCosmos, TransactionCosmos } from '@coin98t/wallet-adapter-base';
 import CustomButton from './ui/custom-button';
 import ResultTxt from './ui/resultTxt';
 import CardMethod from '@/components/ui/card-method';

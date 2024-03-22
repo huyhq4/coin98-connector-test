@@ -15,11 +15,11 @@ import {
   solana,
   polkadot,
   westend,
-} from '@coin98-com/wallet-adapter-react-ui';
+} from '@coin98t/wallet-adapter-react-ui';
 import dynamic from 'next/dynamic';
 import React from 'react';
 
-const WalletModalC98 = dynamic(async () => (await import('@coin98-com/wallet-adapter-react-ui')).WalletModalC98, {
+const WalletModalC98 = dynamic(async () => (await import('@coin98t/wallet-adapter-react-ui')).WalletModalC98, {
   ssr: false,
 });
 

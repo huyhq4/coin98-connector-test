@@ -1,10 +1,10 @@
-import { useWallet } from '@coin98-com/wallet-adapter-react';
+import { useWallet } from '@coin98t/wallet-adapter-react';
 import { useState } from 'react';
 import CustomButton from './ui/custom-button';
 import ResultTxt from './ui/resultTxt';
 import { BigNumberInBase, DEFAULT_STD_FEE } from '@injectivelabs/utils';
 import { MsgSend } from '@injectivelabs/sdk-ts';
-import { TransactionCosmos } from '@coin98-com/wallet-adapter-base';
+import { TransactionCosmos } from '@coin98t/wallet-adapter-base';
 import { Transaction } from 'web3-types';
 import CardMethod from './ui/card-method';
 

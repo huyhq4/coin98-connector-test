@@ -1,6 +1,6 @@
 'use client';
 import CustomButton from '@/components/ui/custom-button';
-import { useWallet } from '@coin98-com/wallet-adapter-react';
+import { useWallet } from '@coin98t/wallet-adapter-react';
 import { useEffect, useState } from 'react';
 import ResultTxt from './ui/resultTxt';
 import CardMethod from '@/components/ui/card-method';

@@ -7,11 +7,11 @@ import {
   viction,
   bsc,
   seiNetwork,
-} from '@coin98-com/wallet-adapter-react-ui';
-import { useWallet } from '@coin98-com/wallet-adapter-react';
+} from '@coin98t/wallet-adapter-react-ui';
+import { useWallet } from '@coin98t/wallet-adapter-react';
 
 import React, { useEffect, useState } from 'react';
-import { AdapterCosmos, TransactionCosmos } from '@coin98-com/wallet-adapter-base';
+import { AdapterCosmos, TransactionCosmos } from '@coin98t/wallet-adapter-base';
 import dynamic from 'next/dynamic';
 import {
   Connection,
@@ -30,7 +30,7 @@ import { type Transaction } from 'web3-types';
 import Link from 'next/link';
 import PolkadotSection from './polkadot-section';
 
-const WalletModalC98 = dynamic(async () => (await import('@coin98-com/wallet-adapter-react-ui')).WalletModalC98, {
+const WalletModalC98 = dynamic(async () => (await import('@coin98t/wallet-adapter-react-ui')).WalletModalC98, {
   ssr: false,
 });
 // const defaultChains: ChainInfo[] = [

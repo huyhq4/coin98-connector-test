@@ -1,5 +1,5 @@
 import { encode } from '@/lib/utils';
-import { useWallet } from '@coin98-com/wallet-adapter-react';
+import { useWallet } from '@coin98t/wallet-adapter-react';
 import bs58 from 'bs58';
 import {
   Connection,

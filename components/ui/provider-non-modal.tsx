@@ -1,11 +1,11 @@
 'use client';
 
-import { Coin98WalletAdapter } from '@coin98-com/wallet-adapter-coin98';
-import { MetaMaskWalletAdapter } from '@coin98-com/wallet-adapter-metamask';
-import { RamperWalletAdapter } from '@coin98-com/wallet-adapter-ramper';
-import { FoxWalletAdapter } from '@coin98-com/wallet-adapter-fox';
+import { Coin98WalletAdapter } from '@coin98t/wallet-adapter-coin98';
+import { MetaMaskWalletAdapter } from '@coin98t/wallet-adapter-metamask';
+import { RamperWalletAdapter } from '@coin98t/wallet-adapter-ramper';
+import { FoxWalletAdapter } from '@coin98t/wallet-adapter-fox';
 
-import { BLOCKCHAINS_DATA, WalletProvider } from '@coin98-com/wallet-adapter-react';
+import { BLOCKCHAINS_DATA, WalletProvider } from '@coin98t/wallet-adapter-react';
 import { useEffect } from 'react';
 interface ContainerProps {
   children: React.ReactNode;

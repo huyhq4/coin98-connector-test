@@ -1,4 +1,4 @@
-import { useWallet } from '@coin98-com/wallet-adapter-react';
+import { useWallet } from '@coin98t/wallet-adapter-react';
 import { useState } from 'react';
 import Web3 from 'web3';
 import { Transaction } from 'web3-types';

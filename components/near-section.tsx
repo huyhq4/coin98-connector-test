@@ -1,7 +1,7 @@
 'use client';
 import CustomButton from '@/components/ui/custom-button';
 import { JsonRpcProvider } from 'near-api-js/lib/providers';
-import { useWallet } from '@coin98-com/wallet-adapter-react';
+import { useWallet } from '@coin98t/wallet-adapter-react';
 
 import { utils } from 'near-api-js';
 import { useEffect, useState } from 'react';
