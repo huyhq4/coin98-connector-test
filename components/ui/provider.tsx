@@ -20,12 +20,15 @@ import { FinWalletAdapter } from '@coin98t/wallet-adapter-fin';
 // import { CryptoWalletAdapter } from '@coin98t/wallet-adapter-crypto';
 // import { ExodusWalletAdapter } from '@coin98t/wallet-adapter-exodus';
 // import { TrezorWalletAdapter } from '@coin98t/wallet-adapter-trezor';
+import { SarosWalletAdapter } from '@coin98t/wallet-adapter-saros';
 import { RamperWalletAdapter } from '@coin98t/wallet-adapter-ramper';
-import { SubWalletAdapter } from '@coin98t/wallet-adapter-subwallet';
+// import { SubWalletAdapter } from '@coin98t/wallet-adapter-subwallet';
 import { FoxWalletAdapter } from '@coin98t/wallet-adapter-fox';
 import { ParticleWalletAdapter } from '@coin98t/wallet-adapter-particle';
 import { BybitWalletAdapter } from '@coin98t/wallet-adapter-bybit';
-import { Ancient8WalletAdapter } from '@coin98t/wallet-adapter-ancient8';
+// import { Ancient8WalletAdapter } from '@coin98t/wallet-adapter-ancient8';
+// import { KrystalWalletAdapter } from '@coin98t/wallet-adapter-krystal';
+import { HaloWalletAdapter } from '@coin98t/wallet-adapter-halo';
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -47,6 +50,8 @@ const Provider: React.FC<ContainerProps> = ({ children }) => {
     CompassWalletAdapter,
     FinWalletAdapter,
     PhantomWalletAdapter,
+    SarosWalletAdapter,
+    HaloWalletAdapter,
     // LedgerAdapter,
     // TrustWalletAdapter,
     // BinanceWalletAdapter,
@@ -58,14 +63,15 @@ const Provider: React.FC<ContainerProps> = ({ children }) => {
     // ExodusWalletAdapter,
     // TrezorWalletAdapter,
     RamperWalletAdapter,
-    SubWalletAdapter,
+    // SubWalletAdapter,
     FoxWalletAdapter,
     ParticleWalletAdapter,
     BybitWalletAdapter,
-    Ancient8WalletAdapter,
+    // Ancient8WalletAdapter,
+    // KrystalWalletAdapter,
   ];
   return (
-    <WalletProvider wallets={wallets} enables={enables} autoConnect>
+    <WalletProvider wallets={wallets} enables={enables} autoConnect keepConnectionOnDisconnected>
       <WalletModalProvider>{children}</WalletModalProvider>
     </WalletProvider>
   );

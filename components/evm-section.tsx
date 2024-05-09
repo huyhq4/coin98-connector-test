@@ -15,6 +15,7 @@ import {
 } from 'eth-sig-util';
 
 import { toChecksumAddress } from 'ethereumjs-util';
+import { WalletReturnType } from '@coin98t/wallet-adapter-base';
 
 const ContentEvm = () => {
   //Constant
@@ -42,7 +43,7 @@ const ContentEvm = () => {
   const [resultSigTypedDatav3, setResultSigTypedDatav3] = useState<string>('');
   const [resultSigTypedDatav4, setResultSigTypedDatav4] = useState<string>('');
   const [resultEthSign, setResultEthSign] = useState<string>('');
-  const [resultGetEncryptionPublicKey, setResultGetEncryptionPublicKey] = useState<string>('');
+  const [resultGetEncryptionPublicKey, setResultGetEncryptionPublicKey] = useState<WalletReturnType<any, any>>();
   const [resultEthDecrypt, setResultEthDecrypt] = useState<string>('');
   const [resultWatchAsset, setResultWatchAsset] = useState<boolean | string>('');
 
@@ -58,6 +59,20 @@ const ContentEvm = () => {
   };
 
   const handleSendToken = async () => {
+    // console.log('before');
+    // await window.coin98.provider.request({
+    //   method: 'eth_sendTransaction',
+    //   params: [
+    //     {
+    //       to: '0x78Bd80570641Ea71E5837F282e8BB4dB93615B95',
+    //       from: '0x78Bd80570641Ea71E5837F282e8BB4dB93615B95',
+    //       value: '0x' + Number(0.1 * 1e18).toString(16),
+    //       data: '0x',
+    //       chainId: '0x58',
+    //     },
+    //   ],
+    // });
+    // console.log('end');
     const transactionParameters: Transaction = {
       to: recipientAddress,
       from: address!,
@@ -208,7 +223,7 @@ const ContentEvm = () => {
 
   const handleGetEncryptionPublicKey = async () => {
     const res = await getEncryptionPublicKey();
-    setResultGetEncryptionPublicKey((res.data as string) || (res.error as string));
+    setResultGetEncryptionPublicKey(res);
   };
 
   const stringifiableToHex = (value: any) => {
@@ -216,11 +231,11 @@ const ContentEvm = () => {
   };
 
   const handleEthDecrypt = async () => {
-    if (!resultGetEncryptionPublicKey)
+    if (resultGetEncryptionPublicKey?.isError)
       return setResultEthDecrypt('Please call function GetEncryptionPublicKey first !!! ');
 
     const encryptData = stringifiableToHex(
-      encrypt(resultGetEncryptionPublicKey, { data: 'ChiPoPo' }, 'x25519-xsalsa20-poly1305'),
+      encrypt(resultGetEncryptionPublicKey?.data!, { data: 'ChiPoPo' }, 'x25519-xsalsa20-poly1305'),
     );
 
     const res = await ethDecrypt(
@@ -234,25 +249,23 @@ const ContentEvm = () => {
   };
 
   const handleSwitchNetwork = async () => {
-    await switchNetwork(
-      selectedChainId === '0x1' ? '0x80' : '0x1',
-      async () =>
-        await (provider as any).request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: '0x80',
-              chainName: 'HECO Chain',
-              nativeCurrency: {
-                name: 'HECO',
-                symbol: 'HECO', // 2-6 characters long
-                decimals: 18,
-              },
-              rpcUrls: ['https://http-mainnet.hecochain.com'],
+    await switchNetwork(selectedChainId === '0x1' ? '0x80' : '0x1', async () => {
+      await (provider as any).request({
+        method: 'wallet_addEthereumChain',
+        params: [
+          {
+            chainId: '0x80',
+            chainName: 'HECO Chain',
+            nativeCurrency: {
+              name: 'HECO',
+              symbol: 'HECO', // 2-6 characters long
+              decimals: 18,
             },
-          ],
-        }),
-    );
+            rpcUrls: ['https://http-mainnet.hecochain.com'],
+          },
+        ],
+      });
+    });
 
     // try {
     //   try {
@@ -323,7 +336,7 @@ const ContentEvm = () => {
     // window.foxwallet.ethereum.callbacks.clear();
     // console.log('chay tiep');
     setInterval(async () => {
-      await window.foxwallet.ethereum.request({
+      await (provider as any).request({
         method: 'wallet_addEthereumChain',
         params: [
           {
@@ -666,7 +679,9 @@ const ContentEvm = () => {
 
       <CardMethod title="getEncryptionPublicKey">
         <CustomButton onClick={() => handleGetEncryptionPublicKey()} title="getEncryptionPublicKey" className="mt-6" />
-        {resultGetEncryptionPublicKey && <ResultTxt txt={resultGetEncryptionPublicKey} />}
+        {resultGetEncryptionPublicKey && (
+          <ResultTxt txt={resultGetEncryptionPublicKey.data || resultGetEncryptionPublicKey.error} />
+        )}
       </CardMethod>
 
       <CardMethod title="ethDecrypt">

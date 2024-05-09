@@ -14,11 +14,13 @@ import NearSection from '@/components/near-section';
 import ContentInjectiveTestnet from '@/components/injective-testnet-section';
 import ContentInjective from '@/components/injective-section';
 import PolkadotSection from '@/components/polkadot-section';
+import CardMethod from '@/components/ui/card-method';
 
 export const revalidate = 0;
 
 const HomePage = () => {
-  const { selectedChainId, selectedBlockChain, disconnect, connected, address, publicKey, wallet } = useWallet();
+  const { selectedChainId, selectedBlockChain, disconnect, connected, address, publicKey, wallet, switchBlockChain } =
+    useWallet();
   const { openWalletModal, switchTheme } = useWalletModal();
   const [isLightMode, setIsLightMode] = useState(false);
   const renderContent = () => {
@@ -56,6 +58,10 @@ const HomePage = () => {
     }
   };
 
+  // const getChainId = async () => {
+  //   const chainddda = await window.krystalwallet.ethereum.request({ method: 'eth_requestAccounts' });
+  //   console.log('🚀 ~ getChainId ~ chainddda:', chainddda);
+  // };
   useEffect(() => {
     const getIsLightMode =
       localStorage.getItem('theme') === 'light' || document.documentElement.getAttribute('data-theme') === 'light';
@@ -108,6 +114,13 @@ const HomePage = () => {
               handleChangeTheme(isLightMode);
             }}
           />
+
+          <CustomButton
+            title="Switch blockchain"
+            onClick={() => {
+              selectedBlockChain !== 'solana' ? switchBlockChain('solana') : switchBlockChain('evm');
+            }}
+          />
         </div>
 
         {connected && (
@@ -140,6 +153,10 @@ const HomePage = () => {
             <div className="mt-4">{connected && renderContent()}</div>
           </div>
         )}
+
+        {/* <CardMethod title="Get Chain ID">
+          <CustomButton onClick={() => getChainId()} title="Get" className="mt-6" />
+        </CardMethod> */}
       </Container>
     </div>
   );
