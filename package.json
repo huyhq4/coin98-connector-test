@@ -87,7 +87,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
-    "@coin98t/wallet-adapter-react-ui": "workspace:*",
+    "@coin98t/wallet-adapter-react-ui": "^0.0.84",
     "@types/bn.js": "^5.1.2",
     "@types/bs58": "^4.0.1",
     "encoding": "^0.1.13",
