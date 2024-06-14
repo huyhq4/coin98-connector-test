@@ -1,104 +1,227 @@
+import CardMethod from '@/components/ui/card-method';
 import { useWallet } from '@coin98t/wallet-adapter-react';
-import { useEffect, useState } from 'react';
-
+import { AminoMsg, StdFee, makeSignDoc as makeSignDocAmino } from '@cosmjs/amino';
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
-import { calculateFee, MsgSendEncodeObject } from '@cosmjs/stargate';
-import { AdapterCosmos, TransactionCosmos } from '@coin98t/wallet-adapter-base';
+import { fromBase64 } from '@cosmjs/encoding';
+import { Int53 } from '@cosmjs/math';
+import {
+  OfflineDirectSigner,
+  Registry,
+  TxBodyEncodeObject,
+  makeAuthInfoBytes,
+  makeSignDoc,
+} from '@cosmjs/proto-signing';
+import {
+  Account,
+  AminoConverters,
+  AminoTypes,
+  createAuthzAminoConverters,
+  createBankAminoConverters,
+  createDistributionAminoConverters,
+  createFeegrantAminoConverters,
+  createGovAminoConverters,
+  createIbcAminoConverters,
+  createStakingAminoConverters,
+  createVestingAminoConverters,
+} from '@cosmjs/stargate';
+import { SigningStargateClient } from '@injectivelabs/sdk-ts/dist/cjs/core/stargate/SigningStargateClient';
+import { SignMode } from 'cosmjs-types/cosmos/tx/signing/v1beta1/signing';
+import { TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
+import { useEffect, useMemo, useState } from 'react';
+import { AdapterCosmos } from '@coin98t/wallet-adapter-base';
 import CustomButton from './ui/custom-button';
 import ResultTxt from './ui/resultTxt';
-import CardMethod from '@/components/ui/card-method';
+
+function createDefaultTypes(): AminoConverters {
+  return {
+    ...createAuthzAminoConverters(),
+    ...createBankAminoConverters(),
+    ...createDistributionAminoConverters(),
+    ...createGovAminoConverters(),
+    ...createStakingAminoConverters(),
+    ...createIbcAminoConverters(),
+    ...createFeegrantAminoConverters(),
+    ...createVestingAminoConverters(),
+  };
+}
 
 const ContentCosmos = () => {
   // Hook
-  const { address, signMessage, sendTransaction, wallet, selectedChainId } = useWallet();
+  const { address, signMessage, wallet, selectedChainId, provider } = useWallet();
   const [resultMessage, setResultMessage] = useState('');
-  const [resultSendToken, setResultSendToken] = useState('');
-  const [resultSendTrans, setResultSendTrans] = useState('');
+  const [resultGetKey, setResultGetKey] = useState('');
+  const [resultDirect, setResultDirect] = useState<TxRaw | string>('');
+  const [resultAmino, setResultAmino] = useState<TxRaw | string>('');
+  //adapter
+  const adapter = wallet?.adapter as AdapterCosmos;
+  //amino type
+  const aminoTypes = new AminoTypes(createDefaultTypes());
+  //message sign arbitrary
+  const messageSign = 'Hi, im LawK from coin98 dev';
+  //rpc injective
+  // const rpcUrl = 'https://injective-rpc.publicnode.com:443';
+  //rpc sei mainnet
+  const rpcUrl = 'https://sei-rpc.publicnode.com:443';
 
-  const isSei = selectedChainId === 'pacific-1';
-  const denom = isSei ? 'usei' : 'ustars';
-  // Constant
-  const CONTRACT_ADDRESS = 'sei1y6t2swnwjewa07hxeuv3pvxd9x9vc8chtwtfz8awpyex0tuurp9qkdzq66';
-  const rpcUrl = 'https://rpc.wallet.pacific-1.sei.io/';
-
-  const recipientAddress: string = isSei
-    ? 'sei1jehf5qknmr5y530pvy2hrmjp6d95n4nvwqtaav'
-    : 'stars1uwrs0tzxllcvdtavx2xx39m48yenaqpt8jndzr';
-
+  const handleGetKey = async () => {
+    //@ts-ignore
+    const key = await provider.getKey(selectedChainId);
+    setResultGetKey(JSON.stringify(key));
+  };
   const handleSignMessage = async () => {
     try {
-      const res = await signMessage('hello');
-      setResultMessage(Buffer.from(res.data as any).toString('hex'));
+      const res = await (adapter as any).signMessage(messageSign);
+      setResultMessage(Buffer.from(res.data).toString('hex'));
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleSendToken = async () => {
-    const offlineSigner = (wallet?.adapter as AdapterCosmos).offlineSigner;
-    const client = await SigningCosmWasmClient.connectWithSigner(rpcUrl, offlineSigner! as any);
-
-    const transferAmount = { amount: '5000', denom: denom };
-
-    const sendMsg: MsgSendEncodeObject = {
-      typeUrl: '/cosmos.bank.v1beta1.MsgSend',
+  const handleSignDirect = async () => {
+    const offlineSigner = await adapter.getOfflineSigner(selectedChainId as string, 'direct');
+    let SigningClient = SigningCosmWasmClient;
+    if (selectedChainId === 'injective-1') {
+      //@ts-ignore
+      SigningClient = SigningStargateClient;
+    }
+    const client = await SigningClient.connectWithSigner(rpcUrl, offlineSigner as any);
+    const { accountNumber, sequence } = (await client.getAccount(address as string)) as Account;
+    const accountFromSigner = (await offlineSigner.getAccounts()).find(
+      //@ts-ignore
+      (account: Account) => account.address === address,
+    );
+    if (!accountFromSigner) {
+      throw new Error('Failed to retrieve account from signer');
+    }
+    //@ts-expect-error
+    const key = await provider.getKey(selectedChainId);
+    const pubkey = key.pubKey;
+    const txBodyEncodeObject: TxBodyEncodeObject = {
+      typeUrl: '/cosmos.tx.v1beta1.TxBody',
       value: {
-        fromAddress: address!,
-        toAddress: recipientAddress,
-        amount: [transferAmount],
+        messages: [
+          {
+            typeUrl: '/cosmos.bank.v1beta1.MsgSend',
+            value: {
+              fromAddress: address,
+              toAddress: address,
+              amount: [
+                {
+                  denom: 'inj',
+                  amount: '0.001',
+                },
+              ],
+            },
+          },
+        ],
       },
     };
-
-    try {
-      const gasEstimation = await client.simulate(address!, [sendMsg], '');
-      const multiplier = 1.3;
-      const fee = calculateFee(Math.round(gasEstimation * multiplier), '0.0025' + denom);
-      try {
-        const result = await client.sendTokens(address!, recipientAddress, [transferAmount], fee, '');
-        if (result.code === 0) {
-          setResultSendToken(result.transactionHash);
-        } else {
-          console.log(`Error sending Tokens ${result.rawLog}`);
-        }
-      } catch (error) {
-        throw error;
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    const fee: StdFee = {
+      amount: [
+        {
+          denom: 'inj',
+          amount: '2000',
+        },
+      ],
+      gas: '180000', // 180k
+      granter: '',
+      payer: address as string,
+    };
+    const registry = new Registry();
+    const txBodyBytes = registry.encode(txBodyEncodeObject);
+    const gasLimit = Int53.fromString(fee.gas).toNumber();
+    const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], fee.amount, gasLimit, fee.granter, fee.payer);
+    const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, selectedChainId as string, accountNumber);
+    //@ts-ignore
+    const { signature, signed } = await adapter.signDirect(selectedChainId, address, signDoc);
+    const txRaw = TxRaw.fromPartial({
+      bodyBytes: signed.bodyBytes,
+      authInfoBytes: signed.authInfoBytes,
+      signatures: [fromBase64((signature as any).signature)],
+    });
+    setResultDirect(JSON.stringify(txRaw));
   };
 
-  const handleSendTransaction = async () => {
-    if (!address) return;
-
-    const txMessage = isSei
-      ? {
-          transfer: {
-            recipient: recipientAddress,
-            amount: '100',
-          },
-        }
-      : {
-          attributes: {
-            key: '_contract_address',
-            value: 'stars13we0myxwzlpx8l5ark8elw5gj5d59dl6cjkzmt80c5q5cv5rt54qm2r0mx',
-          },
-        };
-
-    const transaction: TransactionCosmos = {
-      rpcUrl: rpcUrl,
-      instructions: [{ contractAddress: CONTRACT_ADDRESS, msg: txMessage }],
-      memo: '',
-      denom: denom,
-    };
-
-    try {
-      const res = await sendTransaction(transaction);
-      console.log('res', res);
-      setResultSendTrans((res as any).data.transactionHash);
-    } catch (error) {
-      console.log('error', error);
+  const handleSignAmino = async () => {
+    const offlineSigner = await adapter.getOfflineSigner(selectedChainId as string, 'direct');
+    let SigningClient = SigningCosmWasmClient;
+    if (selectedChainId === 'injective-1') {
+      //@ts-ignore
+      SigningClient = SigningStargateClient;
     }
+    const client = await SigningClient.connectWithSigner(rpcUrl, offlineSigner as any);
+    const { accountNumber, sequence } = (await client.getAccount(address as string)) as Account;
+    const accountFromSigner = (await offlineSigner.getAccounts()).find(
+      //@ts-ignore
+      (account: Account) => account.address === address,
+    );
+    if (!accountFromSigner) {
+      throw new Error('Failed to retrieve account from signer');
+    }
+    //@ts-expect-error
+    const key = await provider.getKey(selectedChainId);
+    const pubkey = key.pubKey;
+    const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
+    const messages = [
+      {
+        typeUrl: '/cosmos.bank.v1beta1.MsgSend',
+        value: {
+          fromAddress: address,
+          toAddress: address,
+          amount: [
+            {
+              denom: 'inj',
+              amount: '0.001',
+            },
+          ],
+        },
+      },
+    ];
+    const msgs = messages.map(msg => aminoTypes.toAmino(msg));
+    const fee: StdFee = {
+      amount: [
+        {
+          denom: 'inj',
+          amount: '2000',
+        },
+      ],
+      gas: '180000', // 180k
+      granter: '',
+      payer: address as string,
+    };
+    const memo = 'LawK memo test';
+    const signDoc = makeSignDocAmino(msgs, fee, selectedChainId as string, memo, accountNumber, sequence);
+    const { signature, signed } = (await adapter.signAmino(
+      selectedChainId as string,
+      address as string,
+      signDoc as any,
+    )) as any;
+    const signedTxBody = {
+      messages: signed.msgs.map((msg: AminoMsg) => aminoTypes.fromAmino(msg)),
+      memo: signed.memo,
+    };
+    const signedTxBodyEncodeObject: TxBodyEncodeObject = {
+      typeUrl: '/cosmos.tx.v1beta1.TxBody',
+      value: signedTxBody,
+    };
+    const registry = new Registry();
+    const signedTxBodyBytes = registry.encode(signedTxBodyEncodeObject);
+    const signedGasLimit = Int53.fromString(signed.fee.gas).toNumber();
+    const signedSequence = Int53.fromString(signed.sequence).toNumber();
+    const signedAuthInfoBytes = makeAuthInfoBytes(
+      [{ pubkey, sequence: signedSequence }],
+      signed.fee.amount,
+      signedGasLimit,
+      signed.fee.granter,
+      signed.fee.payer,
+      signMode,
+    );
+    const txRaw = TxRaw.fromPartial({
+      bodyBytes: signedTxBodyBytes,
+      authInfoBytes: signedAuthInfoBytes,
+      signatures: [fromBase64(signature.signature)],
+    });
+    setResultAmino(JSON.stringify(txRaw));
   };
 
   useEffect(() => {
@@ -111,24 +234,42 @@ const ContentCosmos = () => {
         console.log('Key store in Keplr is changed. You may need to refetch the account info.');
       });
   }, []);
-  return (
-    <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-3">
-      <CardMethod title="Sign Message">
-        <CustomButton title="Sign" onClick={() => handleSignMessage()} className="mt-6" />
-        {resultMessage && <ResultTxt txt={resultMessage} />}
-      </CardMethod>
 
-      <CardMethod title="Send Token">
-        <CustomButton title="Send" onClick={() => handleSendToken()} className="mt-6" />
-        {resultSendToken && <ResultTxt txt={resultSendToken} />}
-      </CardMethod>
+  const methodList = [
+    {
+      title: 'Get Key',
+      result: resultGetKey,
+      func: handleGetKey,
+    },
+    {
+      title: 'Sign Arbitrary',
+      result: resultMessage,
+      func: handleSignMessage,
+    },
+    {
+      title: 'Sign Direct',
+      result: resultDirect,
+      func: handleSignDirect,
+    },
+    {
+      title: 'Sign Amino',
+      result: resultAmino,
+      func: handleSignAmino,
+    },
+  ];
 
-      <CardMethod title="Send Transaction">
-        <CustomButton title="Send" onClick={() => handleSendTransaction()} className="mt-6" />
-        {resultSendTrans && <ResultTxt txt={resultSendTrans} />}
-      </CardMethod>
-    </div>
-  );
+  const renderMethodList = useMemo(() => {
+    return methodList.map(({ title, result, func }, index) => (
+      <div key={index}>
+        <CardMethod title={title}>
+          <CustomButton title="Sign" onClick={func} className="mt-6" />
+          {result && <ResultTxt txt={result} />}
+        </CardMethod>
+      </div>
+    ));
+  }, [JSON.stringify(methodList)]);
+
+  return <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-3">{renderMethodList}</div>;
 };
 
 export default ContentCosmos;

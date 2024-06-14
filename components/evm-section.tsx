@@ -249,23 +249,35 @@ const ContentEvm = () => {
   };
 
   const handleSwitchNetwork = async () => {
-    await switchNetwork(selectedChainId === '0x1' ? '0x80' : '0x1', async () => {
-      await (provider as any).request({
-        method: 'wallet_addEthereumChain',
-        params: [
-          {
-            chainId: '0x80',
-            chainName: 'HECO Chain',
-            nativeCurrency: {
-              name: 'HECO',
-              symbol: 'HECO', // 2-6 characters long
-              decimals: 18,
-            },
-            rpcUrls: ['https://http-mainnet.hecochain.com'],
-          },
-        ],
-      });
-    });
+    const res = await switchNetwork(
+      selectedChainId === '0x1' ? '0x80' : '0x1',
+      async (error, typeError, addNetwork, provider) => {
+        await addNetwork?.();
+      },
+    );
+
+    // const handleSwitchNetwork = async () => {
+    //   const res = await switchNetwork(
+    //     selectedChainId === '0x1' ? '0x80' : '0x1',
+    //     async (error, typeError, addNetwork) => {
+    //       await addNetwork?.();
+    //       // const res = await (provider as any).request({
+    //       //   method: 'wallet_addEthereumChain',
+    //       //   params: [
+    //       //     {
+    //       //       chainId: '0x80',
+    //       //       chainName: 'HECO Chain',
+    //       //       nativeCurrency: {
+    //       //         name: 'HECO',
+    //       //         symbol: 'HECO', // 2-6 characters long
+    //       //         decimals: 18,
+    //       //       },
+    //       //       rpcUrls: ['https://http-mainnet.hecochain.com'],
+    //       //     },
+    //       //   ],
+    //       // });
+    //     },
+    //   );
 
     // try {
     //   try {
@@ -314,15 +326,12 @@ const ContentEvm = () => {
   };
 
   const handleAddChain = async () => {
-    console.log('before');
-
     // const res2 = await window.foxwallet.ethereum.wallet_addEthereumChain({
     //   method: 'wallet_addEthereumChain',
     //   params: [
     //     {
     //       chainId: '0x61',
     //       chainName: 'Binance Smart Chain Testnet',
-
     //       nativeCurrency: {
     //         name: 'BNB',
     //         symbol: 'BNB', // 2-6 characters long
@@ -335,32 +344,29 @@ const ContentEvm = () => {
     // console.log('🚀 ~ file: evm-section.tsx:299 ~ handleAddChain ~ res2:', res2);
     // window.foxwallet.ethereum.callbacks.clear();
     // console.log('chay tiep');
-    setInterval(async () => {
-      await (provider as any).request({
-        method: 'wallet_addEthereumChain',
-        params: [
-          {
-            chainId: '0x61',
-            chainName: 'Binance Smart Chain Testnet',
-
-            nativeCurrency: {
-              name: 'BNB',
-              symbol: 'BNB', // 2-6 characters long
-              decimals: 18,
-            },
-            rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
-          },
-        ],
-      });
-    }, 1000);
-
+    // setInterval(async () => {
+    //   await (provider as any).request({
+    //     method: 'wallet_addEthereumChain',
+    //     params: [
+    //       {
+    //         chainId: '0x61',
+    //         chainName: 'Binance Smart Chain Testnet',
+    //         nativeCurrency: {
+    //           name: 'BNB',
+    //           symbol: 'BNB', // 2-6 characters long
+    //           decimals: 18,
+    //         },
+    //         rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+    //       },
+    //     ],
+    //   });
+    // }, 1000);
     // const res = await window.foxwallet.ethereum.wallet_addEthereumChain({
     //   method: 'wallet_addEthereumChain',
     //   params: [
     //     {
     //       chainId: '0x61',
     //       chainName: 'Binance Smart Chain Testnet',
-
     //       nativeCurrency: {
     //         name: 'BNB',
     //         symbol: 'BNB', // 2-6 characters long
@@ -369,7 +375,6 @@ const ContentEvm = () => {
     //       rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
     //     },
     //   ],
-
     //   // method: 'wallet_addEthereumChain',
     //   // params: [
     //   //   {
@@ -386,7 +391,6 @@ const ContentEvm = () => {
     //   //     isFee: true,
     //   //     image: 'web_bitkub',
     //   //     balances: '0x4d461b38d1753386D4d6797F79441Ed0adC2f6F8',
-
     //   //     id: 'bitkub-coin',
     //   //     name: 'Bitkub Chain',
     //   //     shortName: 'Bitkub',

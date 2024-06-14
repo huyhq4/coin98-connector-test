@@ -15,6 +15,7 @@ import ContentInjectiveTestnet from '@/components/injective-testnet-section';
 import ContentInjective from '@/components/injective-section';
 import PolkadotSection from '@/components/polkadot-section';
 import CardMethod from '@/components/ui/card-method';
+import TestConnecterSection from '@/components/test-lib-connect';
 
 export const revalidate = 0;
 
@@ -30,17 +31,14 @@ const HomePage = () => {
     if (selectedBlockChain === 'cosmos' && (selectedChainId as any) === 'atlantic-2') {
       return <ContentSeiTest />;
     }
-    if (selectedBlockChain === 'cosmos' && (selectedChainId as any) === 'injective-888') {
-      return <ContentInjectiveTestnet />;
-    }
-    if (selectedBlockChain === 'cosmos' && (selectedChainId as any) === 'injective-1') {
-      return <ContentInjective />;
-    }
     if (selectedBlockChain === 'cosmos') return <ContentCosmos />;
+    if (selectedBlockChain === 'sei') return <ContentCosmos />;
+    if (selectedBlockChain === 'injective') return <ContentCosmos />;
     if (selectedBlockChain === 'solana') return <ContentSolana />;
     if (selectedBlockChain === 'near') return <NearSection />;
     if (selectedBlockChain === 'polkadot') return <PolkadotSection />;
   };
+  const publicKeyRender = typeof publicKey === 'string' ? publicKey : publicKey?.toBase58?.();
 
   const handleChangeTheme = (darkTheme: boolean) => {
     if (darkTheme) {
@@ -62,6 +60,7 @@ const HomePage = () => {
   //   const chainddda = await window.krystalwallet.ethereum.request({ method: 'eth_requestAccounts' });
   //   console.log('🚀 ~ getChainId ~ chainddda:', chainddda);
   // };
+
   useEffect(() => {
     const getIsLightMode =
       localStorage.getItem('theme') === 'light' || document.documentElement.getAttribute('data-theme') === 'light';
@@ -114,22 +113,23 @@ const HomePage = () => {
               handleChangeTheme(isLightMode);
             }}
           />
-
-          <CustomButton
-            title="Switch blockchain"
-            onClick={() => {
-              selectedBlockChain !== 'solana' ? switchBlockChain('solana') : switchBlockChain('evm');
-            }}
-          />
+          {connected && (
+            <CustomButton
+              title="Switch blockchain"
+              onClick={() => {
+                selectedBlockChain !== 'cosmos' ? switchBlockChain('injective-1') : switchBlockChain('evm');
+              }}
+            />
+          )}
         </div>
-
+        {/* <TestConnecterSection /> */}
         {connected && (
           <div>
             <div className="mt-10 text-[20px]">
               <h4 className="text-3xl text-[#ffffff] uppercase">{selectedBlockChain}</h4>
               <div className="mt-4 flex flex-col lg:flex-row gap-3 text-xs font-normal">
                 <div className="border border-[#FDD05A] text-[#FDD05A] px-3 py-2 rounded-full">
-                  Wallet Name: <span className="text-[#fff] pl-2">{wallet?.adapter.name}</span>
+                  Wallet Name: <span className="text-[#fff] pl-2">{wallet?.adapter?.name}</span>
                 </div>
                 {address && (
                   <div className="border border-[#FDD05A] text-[#FDD05A] px-3 py-2 rounded-full">
@@ -138,7 +138,7 @@ const HomePage = () => {
                 )}
                 {publicKey && (
                   <div className="border border-[#FDD05A] text-[#FDD05A] px-3 py-2 rounded-full">
-                    Publickey: <span className="text-[#fff] pl-2">{publicKey?.toBase58()}</span>
+                    Publickey: <span className="text-[#fff] pl-2">{publicKeyRender}</span>
                   </div>
                 )}
                 {selectedChainId && (

@@ -1,5 +1,226 @@
 # example
 
+## 0.1.45
+
+### Patch Changes
+
+- Updated dependencies
+  - @coin98t/wallet-adapter-subwallet@0.0.84
+  - @coin98t/wallet-adapter-ancient8@0.0.84
+  - @coin98t/wallet-adapter-metamask@0.0.84
+  - @coin98t/wallet-adapter-particle@0.0.84
+  - @coin98t/wallet-adapter-compass@0.0.84
+  - @coin98t/wallet-adapter-krystal@0.0.84
+  - @coin98t/wallet-adapter-phantom@0.0.84
+  - @coin98t/wallet-adapter-coin98@0.0.84
+  - @coin98t/wallet-adapter-ramper@0.0.84
+  - @coin98t/wallet-adapter-bybit@0.0.84
+  - @coin98t/wallet-adapter-keplr@0.0.84
+  - @coin98t/wallet-adapter-ninji@0.0.84
+  - @coin98t/wallet-adapter-saros@0.0.84
+  - @coin98t/wallet-adapter-halo@0.0.84
+  - @coin98t/wallet-adapter-leap@0.0.84
+  - @coin98t/wallet-adapter-fin@0.0.84
+  - @coin98t/wallet-adapter-fox@0.0.84
+  - @coin98t/wallet-adapter-react@0.0.84
+  - @coin98t/wallet-adapter-base@0.0.84
+
+## 0.1.44
+
+### Patch Changes
+
+- Updated dependencies
+  - @coin98t/wallet-adapter-subwallet@0.0.83
+  - @coin98t/wallet-adapter-ancient8@0.0.83
+  - @coin98t/wallet-adapter-metamask@0.0.83
+  - @coin98t/wallet-adapter-particle@0.0.83
+  - @coin98t/wallet-adapter-compass@0.0.83
+  - @coin98t/wallet-adapter-krystal@0.0.83
+  - @coin98t/wallet-adapter-phantom@0.0.83
+  - @coin98t/wallet-adapter-coin98@0.0.83
+  - @coin98t/wallet-adapter-ramper@0.0.83
+  - @coin98t/wallet-adapter-bybit@0.0.83
+  - @coin98t/wallet-adapter-keplr@0.0.83
+  - @coin98t/wallet-adapter-ninji@0.0.83
+  - @coin98t/wallet-adapter-saros@0.0.83
+  - @coin98t/wallet-adapter-halo@0.0.83
+  - @coin98t/wallet-adapter-leap@0.0.83
+  - @coin98t/wallet-adapter-fin@0.0.83
+  - @coin98t/wallet-adapter-fox@0.0.83
+  - @coin98t/wallet-adapter-react@0.0.83
+  - @coin98t/wallet-adapter-base@0.0.83
+
+## 0.1.43
+
+### Patch Changes
+
+- Updated dependencies
+  - @coin98t/wallet-adapter-subwallet@0.0.82
+  - @coin98t/wallet-adapter-ancient8@0.0.82
+  - @coin98t/wallet-adapter-metamask@0.0.82
+  - @coin98t/wallet-adapter-particle@0.0.82
+  - @coin98t/wallet-adapter-compass@0.0.82
+  - @coin98t/wallet-adapter-krystal@0.0.82
+  - @coin98t/wallet-adapter-phantom@0.0.82
+  - @coin98t/wallet-adapter-coin98@0.0.82
+  - @coin98t/wallet-adapter-ramper@0.0.82
+  - @coin98t/wallet-adapter-bybit@0.0.82
+  - @coin98t/wallet-adapter-keplr@0.0.82
+  - @coin98t/wallet-adapter-ninji@0.0.82
+  - @coin98t/wallet-adapter-saros@0.0.82
+  - @coin98t/wallet-adapter-halo@0.0.82
+  - @coin98t/wallet-adapter-leap@0.0.82
+  - @coin98t/wallet-adapter-fin@0.0.82
+  - @coin98t/wallet-adapter-fox@0.0.82
+  - @coin98t/wallet-adapter-react@0.0.82
+  - @coin98t/wallet-adapter-base@0.0.82
+
+## 0.1.42
+
+### Patch Changes
+
+- Updated dependencies
+  - @coin98t/wallet-adapter-subwallet@0.0.80
+  - @coin98t/wallet-adapter-ancient8@0.0.80
+  - @coin98t/wallet-adapter-metamask@0.0.80
+  - @coin98t/wallet-adapter-particle@0.0.80
+  - @coin98t/wallet-adapter-compass@0.0.80
+  - @coin98t/wallet-adapter-krystal@0.0.80
+  - @coin98t/wallet-adapter-phantom@0.0.80
+  - @coin98t/wallet-adapter-coin98@0.0.80
+  - @coin98t/wallet-adapter-ramper@0.0.80
+  - @coin98t/wallet-adapter-bybit@0.0.80
+  - @coin98t/wallet-adapter-keplr@0.0.80
+  - @coin98t/wallet-adapter-ninji@0.0.80
+  - @coin98t/wallet-adapter-saros@0.0.80
+  - @coin98t/wallet-adapter-halo@0.0.80
+  - @coin98t/wallet-adapter-leap@0.0.80
+  - @coin98t/wallet-adapter-fin@0.0.80
+  - @coin98t/wallet-adapter-fox@0.0.80
+  - @coin98t/wallet-adapter-react@0.0.80
+  - @coin98t/wallet-adapter-base@0.0.80
+
+## 0.1.41
+
+### Patch Changes
+
+- Updated dependencies
+  - @coin98t/wallet-adapter-subwallet@0.0.79
+  - @coin98t/wallet-adapter-ancient8@0.0.79
+  - @coin98t/wallet-adapter-metamask@0.0.79
+  - @coin98t/wallet-adapter-particle@0.0.79
+  - @coin98t/wallet-adapter-compass@0.0.79
+  - @coin98t/wallet-adapter-krystal@0.0.79
+  - @coin98t/wallet-adapter-phantom@0.0.79
+  - @coin98t/wallet-adapter-coin98@0.0.79
+  - @coin98t/wallet-adapter-ramper@0.0.79
+  - @coin98t/wallet-adapter-bybit@0.0.79
+  - @coin98t/wallet-adapter-keplr@0.0.79
+  - @coin98t/wallet-adapter-ninji@0.0.78
+  - @coin98t/wallet-adapter-saros@0.0.79
+  - @coin98t/wallet-adapter-halo@0.0.79
+  - @coin98t/wallet-adapter-leap@0.0.79
+  - @coin98t/wallet-adapter-fin@0.0.79
+  - @coin98t/wallet-adapter-fox@0.0.79
+  - @coin98t/wallet-adapter-react@0.0.79
+  - @coin98t/wallet-adapter-base@0.0.79
+
+## 0.1.40
+
+### Patch Changes
+
+- Updated dependencies
+  - @coin98t/wallet-adapter-subwallet@0.0.78
+  - @coin98t/wallet-adapter-ancient8@0.0.78
+  - @coin98t/wallet-adapter-metamask@0.0.78
+  - @coin98t/wallet-adapter-particle@0.0.78
+  - @coin98t/wallet-adapter-compass@0.0.78
+  - @coin98t/wallet-adapter-krystal@0.0.78
+  - @coin98t/wallet-adapter-phantom@0.0.78
+  - @coin98t/wallet-adapter-coin98@0.0.78
+  - @coin98t/wallet-adapter-ramper@0.0.78
+  - @coin98t/wallet-adapter-bybit@0.0.78
+  - @coin98t/wallet-adapter-keplr@0.0.78
+  - @coin98t/wallet-adapter-saros@0.0.78
+  - @coin98t/wallet-adapter-halo@0.0.78
+  - @coin98t/wallet-adapter-leap@0.0.78
+  - @coin98t/wallet-adapter-fin@0.0.78
+  - @coin98t/wallet-adapter-fox@0.0.78
+  - @coin98t/wallet-adapter-react@0.0.78
+  - @coin98t/wallet-adapter-base@0.0.78
+
+## 0.1.39
+
+### Patch Changes
+
+- Updated dependencies
+  - @coin98t/wallet-adapter-subwallet@0.0.77
+  - @coin98t/wallet-adapter-ancient8@0.0.77
+  - @coin98t/wallet-adapter-metamask@0.0.77
+  - @coin98t/wallet-adapter-particle@0.0.77
+  - @coin98t/wallet-adapter-compass@0.0.77
+  - @coin98t/wallet-adapter-krystal@0.0.77
+  - @coin98t/wallet-adapter-phantom@0.0.77
+  - @coin98t/wallet-adapter-coin98@0.0.77
+  - @coin98t/wallet-adapter-ramper@0.0.77
+  - @coin98t/wallet-adapter-bybit@0.0.77
+  - @coin98t/wallet-adapter-keplr@0.0.77
+  - @coin98t/wallet-adapter-saros@0.0.77
+  - @coin98t/wallet-adapter-halo@0.0.77
+  - @coin98t/wallet-adapter-leap@0.0.77
+  - @coin98t/wallet-adapter-fin@0.0.77
+  - @coin98t/wallet-adapter-fox@0.0.77
+  - @coin98t/wallet-adapter-react@0.0.77
+  - @coin98t/wallet-adapter-base@0.0.77
+
+## 0.1.38
+
+### Patch Changes
+
+- Updated dependencies
+  - @coin98t/wallet-adapter-subwallet@0.0.76
+  - @coin98t/wallet-adapter-ancient8@0.0.76
+  - @coin98t/wallet-adapter-metamask@0.0.76
+  - @coin98t/wallet-adapter-particle@0.0.76
+  - @coin98t/wallet-adapter-compass@0.0.76
+  - @coin98t/wallet-adapter-krystal@0.0.76
+  - @coin98t/wallet-adapter-phantom@0.0.76
+  - @coin98t/wallet-adapter-coin98@0.0.76
+  - @coin98t/wallet-adapter-ramper@0.0.76
+  - @coin98t/wallet-adapter-bybit@0.0.76
+  - @coin98t/wallet-adapter-keplr@0.0.76
+  - @coin98t/wallet-adapter-saros@0.0.76
+  - @coin98t/wallet-adapter-halo@0.0.76
+  - @coin98t/wallet-adapter-leap@0.0.76
+  - @coin98t/wallet-adapter-fin@0.0.76
+  - @coin98t/wallet-adapter-fox@0.0.76
+  - @coin98t/wallet-adapter-react@0.0.76
+  - @coin98t/wallet-adapter-base@0.0.76
+
+## 0.1.37
+
+### Patch Changes
+
+- Updated dependencies
+  - @coin98t/wallet-adapter-subwallet@0.0.75
+  - @coin98t/wallet-adapter-ancient8@0.0.75
+  - @coin98t/wallet-adapter-metamask@0.0.75
+  - @coin98t/wallet-adapter-particle@0.0.75
+  - @coin98t/wallet-adapter-compass@0.0.75
+  - @coin98t/wallet-adapter-krystal@0.0.75
+  - @coin98t/wallet-adapter-phantom@0.0.75
+  - @coin98t/wallet-adapter-coin98@0.0.75
+  - @coin98t/wallet-adapter-ramper@0.0.75
+  - @coin98t/wallet-adapter-bybit@0.0.75
+  - @coin98t/wallet-adapter-keplr@0.0.75
+  - @coin98t/wallet-adapter-saros@0.0.75
+  - @coin98t/wallet-adapter-halo@0.0.75
+  - @coin98t/wallet-adapter-leap@0.0.75
+  - @coin98t/wallet-adapter-fin@0.0.75
+  - @coin98t/wallet-adapter-fox@0.0.75
+  - @coin98t/wallet-adapter-react@0.0.75
+  - @coin98t/wallet-adapter-base@0.0.75
+
 ## 0.1.36
 
 ### Patch Changes

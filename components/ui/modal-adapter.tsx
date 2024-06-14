@@ -26,12 +26,12 @@ const WalletModalC98 = dynamic(async () => (await import('@coin98t/wallet-adapte
 const Coin98AdapterModal = () => {
   const defaultChains: ChainInfo[] = [
     solana,
-    // seiNetwork,
+    seiNetwork,
     // seiTestnet,
     // nearMainnet,
     // nearTestnet,
     // injectiveTestnet,
-    // injectiveMainnet,
+    injectiveMainnet,
     // injectiveEthereumMainnet,
     bscTest,
     ancient8Test,

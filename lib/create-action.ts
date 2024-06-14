@@ -10,7 +10,7 @@ const getAccessKey = (permission: any) => {
   const { receiverId, methodNames = [] } = permission;
   const allowance = permission.allowance ? new BN(permission.allowance) : undefined;
 
-  return transactions.functionCallAccessKey(receiverId, methodNames, allowance);
+  return transactions.functionCallAccessKey(receiverId, methodNames, allowance as unknown as bigint);
 };
 
 export const createAction = (action: any) => {
@@ -25,17 +25,22 @@ export const createAction = (action: any) => {
     case 'FunctionCall': {
       const { methodName, args, gas, deposit } = action.params;
 
-      return transactions.functionCall(methodName, args, new BN(gas), new BN(deposit));
+      return transactions.functionCall(
+        methodName,
+        args,
+        new BN(gas) as unknown as bigint,
+        new BN(deposit) as unknown as bigint,
+      );
     }
     case 'Transfer': {
       const { deposit } = action.params;
 
-      return transactions.transfer(new BN(deposit));
+      return transactions.transfer(new BN(deposit) as unknown as bigint);
     }
     case 'Stake': {
       const { stake, publicKey } = action.params;
 
-      return transactions.stake(new BN(stake), utils.PublicKey.from(publicKey));
+      return transactions.stake(new BN(stake) as unknown as bigint, utils.PublicKey.from(publicKey));
     }
     case 'AddKey': {
       const { publicKey, accessKey } = action.params;
